@@ -17,6 +17,8 @@ namespace TreeFractal
         public double Angle { get; private set; }
         public double Depth { get; private set; } = 0;
         public Line Line { get; private set; }
+        private Branch LeftChild { get; set; } = null;
+        private Branch RightChild { get; set; } = null;
 
         public static double DegreesToRadians(double degrees)
         {
@@ -83,16 +85,26 @@ namespace TreeFractal
 
         public Branch GetLeftChild()
         {
-            Branch child = FromXYLA(X2, Y2, Length * LengthRatio, Angle + DeltaAngle);
-            child.Depth = Depth + 1;
-            return child;
+            if (LeftChild != null)
+            {
+                return LeftChild;
+            }
+
+            LeftChild = FromXYLA(X2, Y2, Length * LengthRatio, Angle + DeltaAngle);
+            LeftChild.Depth = Depth + 1;
+            return LeftChild;
         }
 
         public Branch GetRightChild()
         {
-            Branch child = FromXYLA(X2, Y2, Length * LengthRatio, Angle - DeltaAngle);
-            child.Depth = Depth + 1;
-            return child;
+            if (RightChild != null)
+            {
+                return RightChild;
+            }
+
+            RightChild = FromXYLA(X2, Y2, Length * LengthRatio, Angle - DeltaAngle);
+            RightChild.Depth = Depth + 1;
+            return RightChild;
         }
     }
 }
